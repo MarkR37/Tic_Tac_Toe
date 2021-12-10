@@ -6,11 +6,6 @@
 //        change the board to represent an (letters so char)O/X if the User picks it
 //        every turn check if the user gets one of the 8 possible solution's
 //        Print out who won.
-
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class runGame {
@@ -19,13 +14,10 @@ public class runGame {
     private char[][] board = new char[3][3];
     private String user1;
     private String user2;
-    private String userGuess; //00, 01, 02, 11 .... >
-    private Scanner reader = new Scanner(System.in); // reading from System.in (get input)
-    private int n;
-    private int m;
-
-    //I want to return the position that a user chooses on the board.
-    //if player 1 chooses position 00, then change the result to return a ""
+    private Scanner reader1 = new Scanner(System.in);
+    private Scanner reader2 = new Scanner(System.in);
+    private String n;
+    private String m;
 
     //use in startGame
     private void initBoard() {
@@ -38,7 +30,7 @@ public class runGame {
 
     //use in startGame
     private void printBoard() {
-        System.out.println("\n  0 1 2"); //topmost position guidance
+        System.out.println("\n  0 1 2");
         char y = '0';
         for (int row = 0; row < board.length; row++) {
             System.out.print(y + " ");
@@ -52,17 +44,15 @@ public class runGame {
 
     //updates the position's that the User Guessed
     private void updateBoard1() {
-        String u1 = Integer.toString(n); // changed 01 int to "01", now split
-        int x = u1.charAt(0) - 48; //returns 0 of player 1
-        int y = u1.charAt(1) - 48; //returns 1
+        int x = n.charAt(0) - 48; //returns 0 of player 1
+        int y = n.charAt(1) - 48; //returns 1
         board[x][y] = '0';
 
     }
 
     private void updateBoard2() {
-        String u2 = Integer.toString(m);
-        int x = u2.charAt(0) - '0'; //returns 0 of player 2
-        int y = u2.charAt(1) - '0'; //returns 1
+        int x = m.charAt(0) - '0'; //returns 0 of player 2
+        int y = m.charAt(1) - '0'; //returns 1
         board[x][y] = 'X';
     }
 
@@ -70,76 +60,57 @@ public class runGame {
         user1 = "lost";
         if(board[0][0] == '0' && board[0][1] == '0' && board[0][2] == '0') {
             user1 = "won";
-
         }
         if(board[1][0] == '0' && board[1][1] == '0' && board[1][2] == '0') {
             user1 = "won";
-
         }
         if(board[2][0] == '0' && board[2][1] == '0' && board[2][2] == '0') {
             user1 = "won";
-
         }
         if(board[0][0] == '0' && board[1][0] == '0' && board[2][0] == '0') {
             user1 = "won";
-
         }
         if(board[0][1] == '0' && board[1][1] == '0' && board[2][1] == '0') {
             user1 = "won";
-
         }
         if(board[0][2] == '0' && board[1][2] == '0' && board[2][2] == '0') {
             user1 = "won";
-
         }
         if(board[0][0] == '0' && board[1][1] == '0' && board[2][2] == '0') {
             user1 = "won";
-
         }
         if(board[0][2] == '0' && board[1][1] == '0' && board[2][0] == '0') {
             user1 = "won";
-
         }
-
     }
 
     private void user2Won() {
         user2 = "lost";
         if(board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X') {
             user2 = "won";
-
         }
         if(board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') {
             user2 = "won";
-
         }
         if(board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') {
             user2 = "won";
-
         }
         if(board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X') {
             user2 = "won";
-
         }
         if(board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X') {
             user2 = "won";
-
         }
         if(board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'X') {
             user2 = "won";
-
         }
         if(board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X') {
             user2 = "won";
-
         }
         if(board[0][2] == 'X' && board[1][1] == 'X' && board[2][0] == 'X') {
             user2 = "won";
-
         }
-
     }
-
 
     private void startGame(){
         System.out.println("Welcome to Tic Tac Toe");
@@ -153,31 +124,27 @@ public class runGame {
         printBoard();
         while(x < 1) { // run's until either play 1 or 2 win
             System.out.println("Player 1: ");
-            n = reader.nextInt(); //Represents USER 1 need to convert to string later
+            n = reader1.nextLine();
             //Set user 1 Guess to location
             updateBoard1();
-            //print out new location
             printBoard();
             user1Won();
-            System.out.println("Player 2: ");
-            m = reader.nextInt(); //Represents USER 2 need to convert to string later
-            //Set user 2 Guess to location
-            updateBoard2();
-            //print out new location
-            printBoard();
-            user2Won();
             if(user1 == "won"){
                 x++;
                 break;
             }
+            System.out.println("Player 2: ");
+            m = reader2.nextLine();
+            //Set user 2 Guess to location
+            updateBoard2();
+            printBoard();
+            user2Won();
             if(user2 == "won"){
                 x++;
                 break;
             }
             printBoard();
         }
-
-
     }
 
     private void endGame(){
