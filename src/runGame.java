@@ -2,7 +2,6 @@
 //        tic tac toe
 //        draw the board
 //        assign 1 player to circle and 1 player to X's
-//        create an array list that saves the positions of what the user picks
 //        change the board to represent an (letters so char)O/X if the User picks it
 //        every turn check if the user gets one of the 8 possible solution's
 //        Print out who won.
@@ -12,10 +11,9 @@ public class runGame {
 
     public static final char SPACE = '-';
     private char[][] board = new char[3][3];
-    private String user1;
-    private String user2;
     private Scanner reader1 = new Scanner(System.in);
     private Scanner reader2 = new Scanner(System.in);
+    private String winner;
     private String n;
     private String m;
 
@@ -79,61 +77,35 @@ public class runGame {
         }
     }
 
-    private void user1Won() {
-        user1 = "lost";
-        if(board[0][0] == '0' && board[0][1] == '0' && board[0][2] == '0') {
-            user1 = "won";
+    private String userWon(char x) {
+
+        if(board[0][0] == x && board[0][1] == x && board[0][2] == x) {
+            return "won";
         }
-        if(board[1][0] == '0' && board[1][1] == '0' && board[1][2] == '0') {
-            user1 = "won";
+        if(board[1][0] == x && board[1][1] == x && board[1][2] == x) {
+            return "won";
         }
-        if(board[2][0] == '0' && board[2][1] == '0' && board[2][2] == '0') {
-            user1 = "won";
+        if(board[2][0] == x && board[2][1] == x && board[2][2] == x) {
+            return "won";
         }
-        if(board[0][0] == '0' && board[1][0] == '0' && board[2][0] == '0') {
-            user1 = "won";
+        if(board[0][0] == x && board[1][0] == x && board[2][0] == x) {
+            return "won";
         }
-        if(board[0][1] == '0' && board[1][1] == '0' && board[2][1] == '0') {
-            user1 = "won";
+        if(board[0][1] == x && board[1][1] == x && board[2][1] == x) {
+            return "won";
         }
-        if(board[0][2] == '0' && board[1][2] == '0' && board[2][2] == '0') {
-            user1 = "won";
+        if(board[0][2] == x && board[1][2] == x && board[2][2] == x) {
+            return "won";
         }
-        if(board[0][0] == '0' && board[1][1] == '0' && board[2][2] == '0') {
-            user1 = "won";
+        if(board[0][0] == x && board[1][1] == x && board[2][2] == x) {
+            return "won";
         }
-        if(board[0][2] == '0' && board[1][1] == '0' && board[2][0] == '0') {
-            user1 = "won";
+        if(board[0][2] == x && board[1][1] == x && board[2][0] == x) {
+            return "won";
         }
+        return "";
     }
 
-    private void user2Won() {
-        user2 = "lost";
-        if(board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X') {
-            user2 = "won";
-        }
-        if(board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') {
-            user2 = "won";
-        }
-        if(board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') {
-            user2 = "won";
-        }
-        if(board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X') {
-            user2 = "won";
-        }
-        if(board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X') {
-            user2 = "won";
-        }
-        if(board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'X') {
-            user2 = "won";
-        }
-        if(board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X') {
-            user2 = "won";
-        }
-        if(board[0][2] == 'X' && board[1][1] == 'X' && board[2][0] == 'X') {
-            user2 = "won";
-        }
-    }
 
     private void startGame(){
         System.out.println("Welcome to Tic Tac Toe");
@@ -151,8 +123,9 @@ public class runGame {
             //Set user 1 Guess to location
             updateBoard1();
             printBoard();
-            user1Won();
-            if(user1 == "won"){
+            String user1 = userWon('0');
+            if(user1.equals("won")){
+                winner = "Player 1";
                 x++;
                 break;
             }
@@ -161,8 +134,9 @@ public class runGame {
             //Set user 2 Guess to location
             updateBoard2();
             printBoard();
-            user2Won();
-            if(user2 == "won"){
+            String user2 = userWon('X');
+            if(user2.equals("won")){
+                winner = "Player 2";
                 x++;
                 break;
             }
@@ -171,18 +145,7 @@ public class runGame {
     }
 
     private void endGame(){
-        if (user1.equals("won")) {
-            System.out.println("Player 1 Won!");
-        }
-        else {
-            System.out.println("Player 1 Lost!");
-        }
-        if (user2.equals("won")) {
-            System.out.println("Player 2 Won!");
-        }
-        else {
-            System.out.println("Player 2 Lost!");
-        }
+        System.out.println(winner + " won");
     }
     public static void main(String[] args){
         runGame game = new runGame();
