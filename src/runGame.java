@@ -46,14 +46,37 @@ public class runGame {
     private void updateBoard1() {
         int x = n.charAt(0) - 48; //returns 0 of player 1
         int y = n.charAt(1) - 48; //returns 1
-        board[x][y] = '0';
-
+        if(board[x][y] == 'X') {
+            System.out.println("Already Chosen, please try again: ");
+            n = reader1.nextLine();
+            updateBoard1();
+        }
+        if(board[x][y] == '0') {
+            System.out.println("Already Chosen, please try again: ");
+            n = reader1.nextLine();
+            updateBoard1();
+        }
+        if(board[x][y]== SPACE) {
+            board[x][y] = '0';
+        }
     }
 
     private void updateBoard2() {
         int x = m.charAt(0) - '0'; //returns 0 of player 2
         int y = m.charAt(1) - '0'; //returns 1
-        board[x][y] = 'X';
+        if(board[x][y] == 'X') {
+            System.out.println("Already Chosen, please try again: ");
+            m = reader2.nextLine();
+            updateBoard2();
+        }
+        if(board[x][y] == '0') {
+            System.out.println("Already Chosen, please try again: ");
+            m = reader2.nextLine();
+            updateBoard2();
+        }
+        if(board[x][y] == SPACE) {
+            board[x][y] = 'X';
+        }
     }
 
     private void user1Won() {
