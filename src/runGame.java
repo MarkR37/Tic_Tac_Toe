@@ -21,6 +21,8 @@ public class runGame {
     private String user2;
     private String player1;
     private String player2;
+    private String Player1 = "Not Playing";
+    private String Player2 = "Not Playing";
     private int numTurns = 0;
 
 
@@ -49,58 +51,58 @@ public class runGame {
 
 
     //updates the position's that the User Guessed
-    private void updateBoard1() {
-        int x = n.charAt(0) - 48; //returns 0 of player 1
-        int y = n.charAt(1) - 48; //returns 1
-        if(board[x][y] == 'X') {
-            System.out.println("Already Chosen, please try again: ");
-            n = reader1.nextLine();
-            updateBoard1();
+    private void updatePrime() {
+
+        if (Player1.equals("Playing")) {
+            int x = n.charAt(0) - 48; //returns 0 of player 1
+            int y = n.charAt(1) - 48; //returns 1
+            if (board[x][y] == 'X') {
+                System.out.println("Already Chosen, please try again: ");
+                n = reader1.nextLine();
+                updatePrime();
+            }
+            if (board[x][y] == '0') {
+                System.out.println("Already Chosen, please try again: ");
+                n = reader1.nextLine();
+                updatePrime();
+            }
+            if (board[x][y] == SPACE) {
+                board[x][y] = '0';
+            }
         }
-        if(board[x][y] == '0') {
-            System.out.println("Already Chosen, please try again: ");
-            n = reader1.nextLine();
-            updateBoard1();
-        }
-        if(board[x][y]== SPACE) {
-            board[x][y] = '0';
+        if(Player2.equals("Playing")) {
+            int x = m.charAt(0) - 48; //returns 0 of player 2
+            int y = m.charAt(1) - 48; //returns 1
+            if(board[x][y] == 'X') {
+                System.out.println("Already Chosen, please try again: ");
+                m = reader2.nextLine();
+                updatePrime();
+            }
+            if(board[x][y] == '0') {
+                System.out.println("Already Chosen, please try again: ");
+                m = reader2.nextLine();
+                updatePrime();
+            }
+            if(board[x][y] == SPACE) {
+                board[x][y] = 'X';
+            }
         }
     }
-
-    private void updateBoard2() {
-        int x = m.charAt(0) - '0'; //returns 0 of player 2
-        int y = m.charAt(1) - '0'; //returns 1
-        if(board[x][y] == 'X') {
-            System.out.println("Already Chosen, please try again: ");
-            m = reader2.nextLine();
-            updateBoard2();
-        }
-        if(board[x][y] == '0') {
-            System.out.println("Already Chosen, please try again: ");
-            m = reader2.nextLine();
-            updateBoard2();
-        }
-        if(board[x][y] == SPACE) {
-            board[x][y] = 'X';
-        }
-    }
-
+    //Unsure if this is even needed
     private void setPlayer() {
         System.out.println("Please Choose player 1(0) or 2(X) by typing 1 or 2: ");
         int z = reader3.nextInt();
         if(z < 1 || z > 2) { //Checking to see if the user selected any other number other than 1 or 2
-            System.out.println("Please Choose player 1(0) or 2(X) by typing 1 or 2: ");
-            z = reader3.nextInt();
             setPlayer();
         }
-        if(z == 1) {
+      /*if(z == 1) {
              player1 = user1; // '0'
              player2 = user2; // 'X'
         }
         if(z == 2) {
             player1 = user2; // 'X'
             player2 = user1; // '0'
-        }
+        }*/
 
     }
 
@@ -145,10 +147,12 @@ public class runGame {
         initBoard(); // creates board and sets locations to SPACE
         printBoard();
         while(true) { // run's until either play 1 or 2 win
+            Player1 = "Playing";
             System.out.println("Player 1: ");
             n = reader1.nextLine();
             //Set user 1 Guess to location
-            updateBoard1();
+            updatePrime();
+            Player1 = "Not Playing";
             printBoard();
             numTurns++;
             user1 = userWon('0');
@@ -161,10 +165,12 @@ public class runGame {
                 break;
             }
 
+            Player2 = "Playing";
             System.out.println("Player 2: ");
             m = reader2.nextLine();
             //Set user 2 Guess to location
-            updateBoard2();
+            updatePrime();
+            Player2 = "Not Playing";
             printBoard();
             numTurns++;
             user2 = userWon('X');
@@ -176,18 +182,18 @@ public class runGame {
                 user2 = "tie";
                 break;
             }
-            printBoard();
+            printBoard(); 
         }
     }
 
     // Extra Credit : Need to Do
-    // save which player's turn is which
-    // then use that knowledge to have 1 updateBoard method
     // check if guess is valid so we don't need to recursively call updateBoard
 
     // Extra Credit : DONE
+    // save which player's turn is which
+    // have 1 update Board method
     // set a player 1 0 or player 2 X function
-    // make a condition if there is a tie, make a turn count, if it hits 9 turns overall its a tie. 
+    // make a condition if there is a tie, make a turn count, if it hits 9 turns overall its a tie.
 
     private void endGame(){
         if(user1.equals("tie") || user2.equals("tie")) {
