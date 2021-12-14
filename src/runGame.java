@@ -101,25 +101,19 @@ public class runGame {
         return "";
     }
 
-    private void playingStatus() {
-        if(Player1.equals("Playing")) {
+    private void playingStatus(String doesP1, String doesP2) {
+        if(doesP1.equals("Playing")) {
             System.out.println("Player 1: ");
-            takeUserInput = userInput.next();
-            //Set user 1 Guess to location
-            updateBoard();
-            Player1 = "Not Playing";
-            printBoard();
-            numTurns++;
         }
-        if(Player2.equals("Playing")) {
+        if(doesP2.equals("Playing")) {
             System.out.println("Player 2: ");
-            takeUserInput = userInput.next();
-            //Set user 2 Guess to location
-            updateBoard();
-            Player2 = "Not Playing";
-            printBoard();
-            numTurns++;
         }
+        takeUserInput = userInput.next();
+        updateBoard();
+        Player1 = "Not Playing";
+        Player2 = "Not Playing";
+        printBoard();
+        numTurns++;
     }
 
     private void startGame() {
@@ -129,7 +123,7 @@ public class runGame {
         printBoard();
         while(true) {
             Player1 = "Playing";
-            playingStatus();
+            playingStatus(Player1, Player2);
             wonOrTie = userWon('0');
             if(wonOrTie.equals("won")){
                 winner = "Player 1";
@@ -140,7 +134,7 @@ public class runGame {
                 break;
             }
             Player2 = "Playing";
-            playingStatus();
+            playingStatus(Player1, Player2);
             wonOrTie = userWon('X');
             if(wonOrTie.equals("won")){
                 winner = "Player 2";
